@@ -2,16 +2,16 @@ part of clean_nepali_calendar;
 
 typedef HeaderDayBuilder = Widget Function(String headerName, int dayNumber);
 
-const double _kDayPickerRowHeight = 40.0;
-
 class _DayPickerGridDelegate extends SliverGridDelegate {
-  const _DayPickerGridDelegate();
+  double? dayPickerRowHeight;
+
+  _DayPickerGridDelegate({this.dayPickerRowHeight});
 
   @override
   SliverGridLayout getLayout(SliverConstraints constraints) {
     const columnCount = 7;
     final tileWidth = constraints.crossAxisExtent / columnCount;
-    final tileHeight = math.min(_kDayPickerRowHeight,
+    final tileHeight = math.min(dayPickerRowHeight!,
         constraints.viewportMainAxisExtent / (_kMaxDayPickerRowCount + 1));
     return SliverGridRegularTileLayout(
       crossAxisCount: columnCount,
@@ -27,8 +27,6 @@ class _DayPickerGridDelegate extends SliverGridDelegate {
   bool shouldRelayout(_DayPickerGridDelegate oldDelegate) => false;
 }
 
-const _DayPickerGridDelegate _kDayPickerGridDelegate = _DayPickerGridDelegate();
-
 class _DaysView extends StatelessWidget {
   _DaysView({
     Key? key,
@@ -39,6 +37,7 @@ class _DaysView extends StatelessWidget {
     required this.lastDate,
     required this.displayedMonth,
     required this.language,
+    required this.dayPickerRowHeight,
     required this.calendarStyle,
     required this.headerStyle,
     this.selectableDayPredicate,
@@ -59,6 +58,7 @@ class _DaysView extends StatelessWidget {
   final NepaliDateTime firstDate;
 
   final NepaliDateTime lastDate;
+  final double dayPickerRowHeight;
 
   final NepaliDateTime displayedMonth;
 
@@ -108,13 +108,15 @@ class _DaysView extends StatelessWidget {
           (label) => ExcludeSemantics(
             child: builder != null
                 ? builder(label.value, label.key)
-                : Center(
-                    child: Text(
-                      label.value,
-                      style: headerStyle?.copyWith(
-                        color: label.key == 6
-                            ? calendarStyle.weekEndTextColor
-                            : headerStyle.color,
+                : SizedBox(
+                    child: Center(
+                      child: Text(
+                        label.value,
+                        style: headerStyle?.copyWith(
+                          color: label.key == 6
+                              ? calendarStyle.weekEndTextColor
+                              : headerStyle.color,
+                        ),
                       ),
                     ),
                   ),
@@ -133,7 +135,7 @@ class _DaysView extends StatelessWidget {
     final labels = <Widget>[];
     if (calendarStyle.renderDaysOfWeek) {
       labels.addAll(
-        _getDayHeaders(language, themeData.textTheme.caption, headerDayType,
+        _getDayHeaders(language, themeData.textTheme.bodyMedium, headerDayType,
             headerDayBuilder),
       );
     }
@@ -196,13 +198,13 @@ class _DaysView extends StatelessWidget {
 
       weekNumber += 1;
     }
-
     return Column(
       children: <Widget>[
         Flexible(
           child: GridView.custom(
             physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: _kDayPickerGridDelegate,
+            gridDelegate:
+                _DayPickerGridDelegate(dayPickerRowHeight: dayPickerRowHeight),
             childrenDelegate:
                 SliverChildListDelegate(labels, addRepaintBoundaries: false),
           ),

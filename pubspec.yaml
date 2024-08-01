@@ -1,10 +1,9 @@
-name: clean_nepali_calendar
+name: nepali_calendar_flutter
 description: Highly customizable Nepali Calendar package to display Nepali Bikram Sambat Calendar in your flutter applications.
-version: 2.0.1
-homepage: https://github.com/lohanidamodar/clean_nepali_calendar
+version: 1.0.1
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.16.2 <4.0.0"
 dependencies:
   flutter:
     sdk: flutter

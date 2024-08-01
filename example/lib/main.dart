@@ -1,5 +1,5 @@
-import 'package:clean_nepali_calendar/clean_nepali_calendar.dart';
 import 'package:flutter/material.dart';
+import 'package:nepali_calendar_flutter/nepali_calendar_flutter.dart';
 
 void main() => runApp(MyApp());
 
@@ -26,13 +26,13 @@ class HomePage extends StatelessWidget {
     final NepaliDateTime last = NepaliDateTime(2079, 3);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Clean Nepali Calendar'),
+        title: Text('Nepali Calendar Flutter'),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            CleanNepaliCalendar(
+            NepaliCalendar(
               headerDayBuilder: (_, index) {
                 return Align(
                     alignment: Alignment.topCenter,
@@ -55,6 +55,7 @@ class HomePage extends StatelessWidget {
               onHeaderTapped: (date) {
                 print("header tapped $date");
               },
+              dayPickerRowHeight: 60,
               calendarStyle: CalendarStyle(
                 // weekEndTextColor : Colors.green,
                 selectedColor: Colors.deepOrange,

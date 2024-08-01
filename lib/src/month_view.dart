@@ -1,6 +1,7 @@
 part of clean_nepali_calendar;
 
 const Duration _kMonthScrollDuration = Duration(milliseconds: 200);
+const int _kMaxDayPickerRowCount = 6; // A 31 day month that starts on Saturday.
 
 class _MonthView extends StatefulWidget {
   _MonthView({
@@ -16,6 +17,7 @@ class _MonthView extends StatefulWidget {
     this.onHeaderLongPressed,
     this.onHeaderTapped,
     this.dragStartBehavior = DragStartBehavior.start,
+    required this.dayPickerRowHeight,
     this.headerDayType = HeaderDayType.initial,
     this.headerDayBuilder,
     this.dateCellBuilder,
@@ -29,6 +31,7 @@ class _MonthView extends StatefulWidget {
   final ValueChanged<NepaliDateTime> onChanged;
 
   final NepaliDateTime firstDate;
+  final double dayPickerRowHeight;
 
   final NepaliDateTime lastDate;
 
@@ -66,6 +69,7 @@ class _MonthViewState extends State<_MonthView>
     super.initState();
     // Initially display the pre-selected date.
     final monthPage = _monthDelta(widget.firstDate, widget.selectedDate);
+
     _dayPickerController = PageController(initialPage: monthPage);
     _handleMonthPageChanged(monthPage);
     _updateCurrentDate();
@@ -150,6 +154,7 @@ class _MonthViewState extends State<_MonthView>
     return _DaysView(
       key: ValueKey<NepaliDateTime>(month),
       headerStyle: widget.headerStyle,
+      dayPickerRowHeight: widget.dayPickerRowHeight,
       calendarStyle: widget.calendarStyle,
       selectedDate: widget.selectedDate,
       currentDate: _todayDate,
@@ -209,14 +214,20 @@ class _MonthViewState extends State<_MonthView>
     });
   }
 
+// Two extra rows: one for the day-of-week header and one for the month header.
+  double _kMaxDayPickerHeight = 0;
+
   @override
   Widget build(BuildContext context) {
+    _kMaxDayPickerHeight =
+        widget.dayPickerRowHeight * (_kMaxDayPickerRowCount + 2);
     return SizedBox(
       height: _kMaxDayPickerHeight,
       child: Column(
         children: <Widget>[
           _CalendarHeader(
             onHeaderLongPressed: widget.onHeaderLongPressed,
+            dayPickerRowHeight: widget.dayPickerRowHeight,
             onHeaderTapped: widget.onHeaderTapped,
             language: widget.language,
             handleNextMonth: _handleNextMonth,

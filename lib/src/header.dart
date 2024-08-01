@@ -15,6 +15,7 @@ class _CalendarHeader extends StatelessWidget {
     required Animation<double> chevronOpacityAnimation,
     required bool isDisplayingFirstMonth,
     required NepaliDateTime previousMonthDate,
+    required this.dayPickerRowHeight,
     required this.date,
     required bool isDisplayingLastMonth,
     required NepaliDateTime nextMonthDate,
@@ -40,6 +41,7 @@ class _CalendarHeader extends StatelessWidget {
 
   final Animation<double> _chevronOpacityAnimation;
   final bool _isDisplayingFirstMonth;
+  final double dayPickerRowHeight;
   final NepaliDateTime _previousMonthDate;
   final NepaliDateTime date;
   final bool _isDisplayingLastMonth;
@@ -71,11 +73,11 @@ class _CalendarHeader extends StatelessWidget {
       onTap: _onHeaderTapped,
       onLongPress: _onHeaderLongPressed,
       child: (_headerBuilder != null)
-          ? _headerBuilder!(_headerStyle.decoration, _kDayPickerRowHeight,
+          ? _headerBuilder!(_headerStyle.decoration, dayPickerRowHeight,
               _handleNextMonth, _handlePreviousMonth, date)
           : Container(
               decoration: _headerStyle.decoration,
-              height: _kDayPickerRowHeight,
+              height: dayPickerRowHeight,
               child: Row(
                 children: <Widget>[
                   Expanded(

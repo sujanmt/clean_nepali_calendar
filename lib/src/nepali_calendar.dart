@@ -11,19 +11,20 @@ String formattedMonth(
       NepaliDateTime(1970, month),
     );
 
-const int _kMaxDayPickerRowCount = 6; // A 31 day month that starts on Saturday.
-// Two extra rows: one for the day-of-week header and one for the month header.
-const double _kMaxDayPickerHeight =
-    _kDayPickerRowHeight * (_kMaxDayPickerRowCount + 2);
+// const int _kMaxDayPickerRowCount = 6; // A 31 day month that starts on Saturday.
+// // Two extra rows: one for the day-of-week header and one for the month header.
+// const double _kMaxDayPickerHeight =
+//     _kDayPickerRowHeight * (_kMaxDayPickerRowCount + 2);
 
-class CleanNepaliCalendar extends StatefulWidget {
-  const CleanNepaliCalendar({
+class NepaliCalendar extends StatefulWidget {
+  const NepaliCalendar({
     Key? key,
     this.initialDate,
     this.firstDate,
     this.lastDate,
     this.selectableDayPredicate,
     this.language = Language.nepali,
+    this.dayPickerRowHeight = 50.0,
     this.onDaySelected,
     this.headerStyle = const HeaderStyle(),
     this.calendarStyle = const CalendarStyle(),
@@ -40,6 +41,7 @@ class CleanNepaliCalendar extends StatefulWidget {
   final NepaliDateTime? initialDate;
   final NepaliDateTime? firstDate;
   final NepaliDateTime? lastDate;
+  final double? dayPickerRowHeight;
   final Function(NepaliDateTime)? onDaySelected;
   final SelectableDayPredicate? selectableDayPredicate;
   final Language language;
@@ -55,10 +57,10 @@ class CleanNepaliCalendar extends StatefulWidget {
   final bool enableVibration;
 
   @override
-  CleanNepaliCalendarState createState() => CleanNepaliCalendarState();
+  NepaliCalendarState createState() => NepaliCalendarState();
 }
 
-class CleanNepaliCalendarState extends State<CleanNepaliCalendar> {
+class NepaliCalendarState extends State<NepaliCalendar> {
   @override
   void initState() {
     super.initState();
@@ -89,7 +91,7 @@ class CleanNepaliCalendarState extends State<CleanNepaliCalendar> {
   }
 
   @override
-  void didUpdateWidget(CleanNepaliCalendar oldWidget) {
+  void didUpdateWidget(NepaliCalendar oldWidget) {
     super.didUpdateWidget(oldWidget);
     _selectedDate = widget.initialDate ?? NepaliDateTime.now();
     widget.controller
@@ -120,6 +122,7 @@ class CleanNepaliCalendarState extends State<CleanNepaliCalendar> {
       headerStyle: widget.headerStyle,
       calendarStyle: widget.calendarStyle,
       language: widget.language,
+      dayPickerRowHeight: widget.dayPickerRowHeight ?? 50.0,
       selectedDate: _selectedDate,
       onChanged: _handleDayChanged,
       firstDate: widget.firstDate ?? NepaliDateTime(2000, 1),

@@ -1,4 +1,4 @@
-name: clean_nepali_calendar_example
+name: nepali_calendar_example
 description: A new Flutter project.
 version: 1.0.0+1
 publish_to: none
@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  clean_nepali_calendar:
+  nepali_calendar_flutter:
     path: ../
   nepali_date_picker: ^5.3.0
 
