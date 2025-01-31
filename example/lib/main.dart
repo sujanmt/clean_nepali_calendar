@@ -45,16 +45,13 @@ class HomePage extends StatelessWidget {
                       ),
                     ));
               },
-
+              onMonthChanged: (value) {
+                print(
+                    "header long pressed ${value.year} ${value.month} ${value.day}");
+              },
               // headerBuilder: (_,__,___,____,______)=>Text("header"),
               headerDayType: HeaderDayType.fullName,
               controller: _nepaliCalendarController,
-              onHeaderLongPressed: (date) {
-                print("header long pressed $date");
-              },
-              onHeaderTapped: (date) {
-                print("header tapped $date");
-              },
               dayPickerRowHeight: 60,
               calendarStyle: CalendarStyle(
                 // weekEndTextColor : Colors.green,

@@ -26,6 +26,7 @@ class NepaliCalendar extends StatefulWidget {
     this.language = Language.nepali,
     this.dayPickerRowHeight = 50.0,
     this.onDaySelected,
+    this.onMonthChanged,
     this.headerStyle = const HeaderStyle(),
     this.calendarStyle = const CalendarStyle(),
     this.onHeaderTapped,
@@ -43,6 +44,7 @@ class NepaliCalendar extends StatefulWidget {
   final NepaliDateTime? lastDate;
   final double? dayPickerRowHeight;
   final Function(NepaliDateTime)? onDaySelected;
+  final Function(NepaliDateTime)? onMonthChanged;
   final SelectableDayPredicate? selectableDayPredicate;
   final Language language;
   final CalendarStyle calendarStyle;
@@ -125,6 +127,7 @@ class NepaliCalendarState extends State<NepaliCalendar> {
       dayPickerRowHeight: widget.dayPickerRowHeight ?? 50.0,
       selectedDate: _selectedDate,
       onChanged: _handleDayChanged,
+      onMonthChanged: (value) => widget.onMonthChanged!(value),
       firstDate: widget.firstDate ?? NepaliDateTime(2000, 1),
       lastDate: widget.lastDate ?? NepaliDateTime(2095, 12),
       selectableDayPredicate: widget.selectableDayPredicate,

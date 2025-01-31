@@ -8,6 +8,7 @@ class _MonthView extends StatefulWidget {
     Key? key,
     required this.selectedDate,
     required this.onChanged,
+    required this.onMonthChanged,
     required this.firstDate,
     required this.lastDate,
     required this.language,
@@ -29,6 +30,7 @@ class _MonthView extends StatefulWidget {
   final NepaliDateTime selectedDate;
 
   final ValueChanged<NepaliDateTime> onChanged;
+  final ValueChanged<NepaliDateTime> onMonthChanged;
 
   final NepaliDateTime firstDate;
   final double dayPickerRowHeight;
@@ -178,6 +180,8 @@ class _MonthViewState extends State<_MonthView>
           textDirection);
       _dayPickerController.nextPage(
           duration: _kMonthScrollDuration, curve: Curves.ease);
+      var date = NepaliDateTime(_nextMonthDate.year, _nextMonthDate.month, 1);
+      widget.onMonthChanged(date);
     }
   }
 
@@ -188,6 +192,9 @@ class _MonthViewState extends State<_MonthView>
           textDirection);
       _dayPickerController.previousPage(
           duration: _kMonthScrollDuration, curve: Curves.ease);
+      var date =
+          NepaliDateTime(_previousMonthDate.year, _previousMonthDate.month, 1);
+      widget.onMonthChanged(date);
     }
   }
 
